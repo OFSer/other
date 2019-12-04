@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import os
 import re
 import sys
 import time
@@ -117,7 +118,10 @@ class Yujian:
             cnx.close()
 
     def write_file(self, req_url, table_name):
-        with open("./db_file/{}.txt".format(table_name), 'at') as f:
+        db_dir = "db_file"
+        if not os.path.exists(db_dir):
+            os.makedirs(db_dir)
+        with open("{}/{}.txt".format(db_dir,table_name), 'at') as f:
             f.write("{}\n".format(req_url))
 
     def create_table(self, domain_name):
