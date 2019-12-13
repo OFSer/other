@@ -18,9 +18,9 @@ def https_proxies():
     return https_proxies_list
 
 def get_vip_url_list(page, headers, proxies):
-    url = "http://www.ssp28.pw/e/member/list/index.php"
+    url = "http://www.xxxxxxxxxxxxx/index.php"
     web = requests.session()
-    r = web.get("{}?page={}&sear=1&hh[]=&keyboard[]=&totalnum=360108".format(url, page),headers=headers,proxies=proxies)
+    r = web.get("{}?page={}&sear=1".format(url, page),headers=headers,proxies=proxies)
     #assert r.status_code == HTTPStatus.OK
     tree = html.fromstring(r.text)
     #从会员空间采集
@@ -31,7 +31,7 @@ def get_vip_url_list(page, headers, proxies):
 
 def get_vip_info(para, headers, proxies):
     try:
-        url = "http://www.ssp28.pw"
+        url = "http://www.xxxxxxxxxx"
         vip_r = requests.get("{}{}".format(url,para), headers=headers, proxies=proxies)
         #assert vip_r.status_code == HTTPStatus.OK
     except:
@@ -87,9 +87,7 @@ def main():
     tuple_rows = []
     https_proxies_list = https_proxies()
     headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36'}
-    for page in range(18006):
-#        if page % 100 == 0:
-#            https_proxies_list = https_proxies()
+    for page in range(18):
         https_proxy = random.choice(https_proxies_list)
         proxies = {"https":"https://{}".format(https_proxy)}
         print("one choice:",proxies)
