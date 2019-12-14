@@ -70,18 +70,29 @@ def save_csv(tuple_rows):
         f_csv.writerows(tuple_rows)
 
 def execute_threads(headers, para_list, https_proxies_list):
-    tuple_rows = []
     for para in para_list:
         https_proxy2 = random.choice(https_proxies_list)
         proxies2 = {"https":"https://{}".format(https_proxy2)}
         print ("two choice:",proxies2)
         info_tuple = get_vip_info(para, headers, proxies2)
         if info_tuple:
-            tuple_rows.append(info_tuple)
+            save_csv(info_tuple)
         else:
-            time.sleep(5)
+            while 1:
+                time.sleep(5)
+                re_https_proxy = random.choice(https_proxies_list)
+                re_proxies = {"https":"https://{}".format(re_https_proxy)}
+                print ("three choice:", re_proxies)
+                re_info_tuple = get_vip_info(para, headers, re_proxies)
+                if re_info_tuple:
+                    save_csv(re_info_tuple)
+                    print ("Three Save Sucess!")
+                    break
+                else:
+                    print ("Three Save Failure! Retrying...")
+                    time.sleep(15)
+                    continue
             continue
-        save_csv(tuple_rows)
 
 def main():
     tuple_rows = []
